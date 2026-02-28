@@ -39,9 +39,9 @@
       >
         <v-card
           :to="linkWithRoom(
-            { name: 'PlexServer', params: { machineIdentifier: server.clientIdentifier }},
+            { name: 'PlexServer', params: { machineIdentifier: server.clientIdentifier } },
           )"
-          style="background: rgba(0, 0, 0, 0.6);"
+          style="background: rgb(0 0 0 / 60%);"
           :title="server.name"
         >
           <v-container fill-height>

@@ -231,7 +231,6 @@ export default {
       return {
         streaming: {
           bufferingGoal: this.GET_CONFIG.slplayer_buffering_goal,
-          jumpLargeGaps: true,
         },
       };
     },
@@ -423,7 +422,7 @@ export default {
     },
 
     handleTimeUpdate() {
-      this.videoTimeStamp = this.$refs?.videoPlayer?.currentTime * 1000;
+      this.videoTimeStamp = (this.$refs?.videoPlayer?.currentTime ?? 0) * 1000;
     },
 
     async checkAutoSkipIntro() {
@@ -463,11 +462,11 @@ export default {
       linear,
       left top,
       left bottom,
-      from(rgba(0, 0, 0, 0.8)),
-      color-stop(60%, rgba(0, 0, 0, 0.35)),
+      from(rgb(0 0 0 / 80%)),
+      color-stop(60%, rgb(0 0 0 / 35%)),
       to(transparent)
     );
-  background: linear-gradient(180deg, rgba(0, 0, 0, 0.8) 0, rgba(0, 0, 0, 0.35) 60%, transparent);
+  background: linear-gradient(180deg, rgb(0 0 0 / 80%) 0, rgb(0 0 0 / 35%) 60%, transparent);
   top: 0;
   left: 0;
   width: 100%;

@@ -1,4 +1,4 @@
-import CAF from 'caf/dist/caf';
+import { CAF } from 'caf';
 
 import { getRandomPlexId } from '@/utils/random';
 import { fetchJson, queryFetch } from '@/utils/fetchutils';
@@ -119,12 +119,15 @@ export default {
     }
   },
 
-  SEND_PLEX_TIMELINE_UPDATE: async ({ getters, dispatch },
-    { signal, ...extraParams } = {}) => queryFetch(
+  SEND_PLEX_TIMELINE_UPDATE: async (
+    { getters, dispatch },
+    { signal, ...extraParams } = {},
+  ) => queryFetch(
     getters.GET_TIMELINE_URL,
     {
       ...await dispatch('MAKE_TIMELINE_PARAMS'),
-      ...extraParams,
+      ...(extraParams.state !== undefined && { state: extraParams.state }),
+      ...(extraParams.continuing !== undefined && { continuing: extraParams.continuing }),
     },
     { signal },
   ),
@@ -278,8 +281,10 @@ export default {
     commit('SET_OFFSET_MS', seekToMs);
     setCurrentTimeMs(seekToMs);
 
-    const timeoutToken = CAF.timeout(rootGetters.GET_CONFIG.slplayer_seek_timeout,
-      'Normal seek took too long');
+    const timeoutToken = CAF.timeout(
+      rootGetters.GET_CONFIG.slplayer_seek_timeout,
+      'Normal seek took too long',
+    );
 
     const anySignal = CAF.signalRace([
       cancelSignal,
@@ -510,12 +515,17 @@ export default {
       continuing: 1,
     });
 
-    await dispatch('plexclients/UPDATE_STATE_FROM_ACTIVE_PLAY_QUEUE_SELECTED_ITEM', null,
-      { root: true });
+    await dispatch(
+      'plexclients/UPDATE_STATE_FROM_ACTIVE_PLAY_QUEUE_SELECTED_ITEM',
+      null,
+      { root: true },
+    );
     // TODO: maybe plex indicates ongoing media index?
     commit('SET_MEDIA_INDEX', 0);
-    commit('SET_OFFSET_MS',
-      rootGetters['plexclients/GET_ACTIVE_PLAY_QUEUE_SELECTED_ITEM'].viewOffset || 0);
+    commit(
+      'SET_OFFSET_MS',
+      rootGetters['plexclients/GET_ACTIVE_PLAY_QUEUE_SELECTED_ITEM'].viewOffset || 0,
+    );
     commit('SET_MASK_PLAYER_STATE', true);
     await dispatch('synclounge/PROCESS_MEDIA_UPDATE', true, { root: true });
 

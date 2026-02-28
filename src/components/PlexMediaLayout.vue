@@ -6,7 +6,7 @@
           :img="artUrl"
         >
           <v-container
-            style="background: rgba(0, 0, 0, 0.7);"
+            style="background: rgb(0 0 0 / 70%);"
             fluid
           >
             <v-row no-gutters>
@@ -23,7 +23,7 @@
                       <v-img
                         :src="thumbUrl"
                         width="200"
-                        :aspect-ratio="2/3"
+                        :aspect-ratio="2 / 3"
                         class="hidden-sm-and-down"
                       />
                     </v-col>

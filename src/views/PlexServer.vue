@@ -25,10 +25,13 @@
               :img="getArtLibrary(library)"
               v-bind="attrs"
               flat
-              :to="linkWithRoom({ name: 'PlexLibrary', params: {
-                machineIdentifier: machineIdentifier,
-                sectionId: library.key,
-              }})"
+              :to="linkWithRoom({
+                name: 'PlexLibrary',
+                params: {
+                  machineIdentifier: machineIdentifier,
+                  sectionId: library.key,
+                },
+              })"
               v-on="on"
             >
               <div class="hidden-xs-only pa-2">
@@ -40,7 +43,7 @@
               </div>
 
               <v-card-title
-                style="background: rgba(0, 0, 0, 0.7);"
+                style="background: rgb(0 0 0 / 70%);"
                 class="px-3 py-1"
               >
                 <div class="text-subtitle-1">
